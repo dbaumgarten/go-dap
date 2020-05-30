@@ -1,3 +1,9 @@
+# Attention
+
+This is a private fork of the original repo intended for use until the currently opens PRs are merged.
+
+
+
 # go-dap: Go implementation of the Debug Adapter Protocol
 
 [![Build Status](https://travis-ci.org/google/go-dap.svg?branch=master)](https://travis-ci.org/google/go-dap)
