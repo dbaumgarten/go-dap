@@ -391,6 +391,33 @@ func emitMessageMethods(sb *strings.Builder, typeName string) {
 	}
 }
 
+// emitRequestMethods emits methods for typeName that make it implement the
+// RequestMessage interface. These methods are only emitted for top-level types which
+// should implement that interface; other types are ignored.
+func emitRequestMethods(sb *strings.Builder, typeName string) {
+	if strings.HasSuffix(typeName, "Request") && typeName != "Request" {
+		fmt.Fprintf(sb, "func (r *%s) GetRequest() *Request {return &r.Request}\n", typeName)
+	}
+}
+
+// emitResponseMethods emits methods for typeName that make it implement the
+// ResponseMessage interface. These methods are only emitted for top-level types which
+// should implement that interface; other types are ignored.
+func emitResponseMethods(sb *strings.Builder, typeName string) {
+	if strings.HasSuffix(typeName, "Response") && typeName != "Response" {
+		fmt.Fprintf(sb, "func (r *%s) GetResponse() *Response {return &r.Response}\n", typeName)
+	}
+}
+
+// emitEventMethods emits methods for typeName that make it implement the
+// EventMessage interface. These methods are only emitted for top-level types which
+// should implement that interface; other types are ignored.
+func emitEventMethods(sb *strings.Builder, typeName string) {
+	if strings.HasSuffix(typeName, "Event") && typeName != "Event" {
+		fmt.Fprintf(sb, "func (e *%s) GetProtocolMessage() *ProtocolMessage {return &e.ProtocolMessage}\n", typeName)
+	}
+}
+
 const preamble = `// Copyright 2020 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -421,6 +448,23 @@ type Message interface {
 	GetSeq() int
 }
 
+// RequestMessage is an interface implemented by all Request-types. 
+type RequestMessage interface {
+	// GetRequest provides access to the embedded Request-field by returning a pointer to it
+	GetRequest() *Request
+}
+
+// ResponseMessage is an interface implemented by all Response-types. 
+type ResponseMessage interface {
+	// GetResponse provides access to the embedded Response-field by returning a pointer to it
+	GetResponse() *Response
+}
+
+// EventMessage is an interface implemented by all Event-types. 
+type EventMessage interface {
+	// GetProtocolMessage provides access to the embedded ProtocolMessage-field by returning a pointer to it
+	GetProtocolMessage() *ProtocolMessage
+}
 `
 
 // typesBlacklist is a blacklist of type names we don't want to emit.
@@ -468,6 +512,9 @@ func main() {
 	for _, typeName := range typeNames {
 		typeName = replaceGoTypename(typeName)
 		emitMessageMethods(&b, typeName)
+		emitRequestMethods(&b, typeName)
+		emitResponseMethods(&b, typeName)
+		emitEventMethods(&b, typeName)
 	}
 
 	wholeFile := []byte(b.String())
