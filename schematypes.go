@@ -45,8 +45,8 @@ type ResponseMessage interface {
 // EventMessage is an interface implemented by all Event-types.
 type EventMessage interface {
 	Message
-	// GetProtocolMessage provides access to the embedded ProtocolMessage-field by returning a pointer to it
-	GetProtocolMessage() *ProtocolMessage
+	// GetEvent provides access to the embedded Event-field by returning a pointer to it
+	GetEvent() *Event
 }
 
 // ProtocolMessage: Base class of requests, responses, and events.
@@ -1519,29 +1519,29 @@ func (r *CancelRequest) GetRequest() *Request                     { return &r.Re
 func (m *CancelResponse) GetSeq() int                             { return m.Seq }
 func (r *CancelResponse) GetResponse() *Response                  { return &r.Response }
 func (m *InitializedEvent) GetSeq() int                           { return m.Seq }
-func (e *InitializedEvent) GetProtocolMessage() *ProtocolMessage  { return &e.ProtocolMessage }
+func (e *InitializedEvent) GetEvent() *Event                      { return &e.Event }
 func (m *StoppedEvent) GetSeq() int                               { return m.Seq }
-func (e *StoppedEvent) GetProtocolMessage() *ProtocolMessage      { return &e.ProtocolMessage }
+func (e *StoppedEvent) GetEvent() *Event                          { return &e.Event }
 func (m *ContinuedEvent) GetSeq() int                             { return m.Seq }
-func (e *ContinuedEvent) GetProtocolMessage() *ProtocolMessage    { return &e.ProtocolMessage }
+func (e *ContinuedEvent) GetEvent() *Event                        { return &e.Event }
 func (m *ExitedEvent) GetSeq() int                                { return m.Seq }
-func (e *ExitedEvent) GetProtocolMessage() *ProtocolMessage       { return &e.ProtocolMessage }
+func (e *ExitedEvent) GetEvent() *Event                           { return &e.Event }
 func (m *TerminatedEvent) GetSeq() int                            { return m.Seq }
-func (e *TerminatedEvent) GetProtocolMessage() *ProtocolMessage   { return &e.ProtocolMessage }
+func (e *TerminatedEvent) GetEvent() *Event                       { return &e.Event }
 func (m *ThreadEvent) GetSeq() int                                { return m.Seq }
-func (e *ThreadEvent) GetProtocolMessage() *ProtocolMessage       { return &e.ProtocolMessage }
+func (e *ThreadEvent) GetEvent() *Event                           { return &e.Event }
 func (m *OutputEvent) GetSeq() int                                { return m.Seq }
-func (e *OutputEvent) GetProtocolMessage() *ProtocolMessage       { return &e.ProtocolMessage }
+func (e *OutputEvent) GetEvent() *Event                           { return &e.Event }
 func (m *BreakpointEvent) GetSeq() int                            { return m.Seq }
-func (e *BreakpointEvent) GetProtocolMessage() *ProtocolMessage   { return &e.ProtocolMessage }
+func (e *BreakpointEvent) GetEvent() *Event                       { return &e.Event }
 func (m *ModuleEvent) GetSeq() int                                { return m.Seq }
-func (e *ModuleEvent) GetProtocolMessage() *ProtocolMessage       { return &e.ProtocolMessage }
+func (e *ModuleEvent) GetEvent() *Event                           { return &e.Event }
 func (m *LoadedSourceEvent) GetSeq() int                          { return m.Seq }
-func (e *LoadedSourceEvent) GetProtocolMessage() *ProtocolMessage { return &e.ProtocolMessage }
+func (e *LoadedSourceEvent) GetEvent() *Event                     { return &e.Event }
 func (m *ProcessEvent) GetSeq() int                               { return m.Seq }
-func (e *ProcessEvent) GetProtocolMessage() *ProtocolMessage      { return &e.ProtocolMessage }
+func (e *ProcessEvent) GetEvent() *Event                          { return &e.Event }
 func (m *CapabilitiesEvent) GetSeq() int                          { return m.Seq }
-func (e *CapabilitiesEvent) GetProtocolMessage() *ProtocolMessage { return &e.ProtocolMessage }
+func (e *CapabilitiesEvent) GetEvent() *Event                     { return &e.Event }
 func (m *RunInTerminalRequest) GetSeq() int                       { return m.Seq }
 func (r *RunInTerminalRequest) GetRequest() *Request              { return &r.Request }
 func (m *RunInTerminalResponse) GetSeq() int                      { return m.Seq }

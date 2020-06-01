@@ -414,7 +414,7 @@ func emitResponseMethods(sb *strings.Builder, typeName string) {
 // should implement that interface; other types are ignored.
 func emitEventMethods(sb *strings.Builder, typeName string) {
 	if strings.HasSuffix(typeName, "Event") && typeName != "Event" {
-		fmt.Fprintf(sb, "func (e *%s) GetProtocolMessage() *ProtocolMessage {return &e.ProtocolMessage}\n", typeName)
+		fmt.Fprintf(sb, "func (e *%s) GetEvent() *Event {return &e.Event}\n", typeName)
 	}
 }
 
@@ -465,8 +465,8 @@ type ResponseMessage interface {
 // EventMessage is an interface implemented by all Event-types. 
 type EventMessage interface {
 	Message
-	// GetProtocolMessage provides access to the embedded ProtocolMessage-field by returning a pointer to it
-	GetProtocolMessage() *ProtocolMessage
+	// GetEvent provides access to the embedded Event-field by returning a pointer to it
+	GetEvent() *Event
 }
 `
 
